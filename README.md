@@ -1,14 +1,20 @@
-# Wingspan Helper
+# Wingspan Helper (Swift Edition)
 
-A small web app dedicated to the beautiful boardgame [Wingspan](https://stonemaiergames.com/games/wingspan/). It currently provides a digital scoresheet. A companion for the Automata for solo playing is planned.
+A small web app dedicated to the beautiful boardgame [Wingspan](https://stonemaiergames.com/games/wingspan/). It currently provides a digital scoresheet.
 
-:arrow_right: Try it out at https://wingspan-helper.now.sh/
+:arrow_right: Try it out at https://wingspan-helper-swift.vercel.app/
 
 :sparkles: You can add the app to your homescreen and use it offline if you want!
 
-![Screenshot](https://user-images.githubusercontent.com/9062294/68215859-43fe3080-ffe0-11e9-8b88-8f010e24a2f9.png)
+![Screenshot](screenshot.png?raw=true "Screenshot")
 
 ## Credits
+
+This project was started by greengiraffe. Kudos for the effort and making such a beautiful app!
+
+This is a fork of the original app, which is found here: https://github.com/greengiraffe/wingspan-helper
+
+I added the ability to provide player names (bragging rights! screenshots!), store all the state data across application runs (so you don't have to enter your names every time), plus adjusting the layout so when selecting the number of players, the scorecard uses the whole width of the display. I also cut out all the Automata stuff, since that was not important to me, and wasn't yet functional anyways.
 
 This is an independent open source project, it is not related to Stonemaier Games or the original boardgame Wingspan in any way.
 
@@ -30,7 +36,7 @@ You need to have [Yarn](https://yarnpkg.com/en/) installed.
 
 ```sh
 # clone the repository
-git clone https://github.com/greengiraffe/wingspan-helper.git
+git clone https://github.com/verdantPermission/wingspan-helper
 
 # change into the project folder
 cd wingspan-helper
