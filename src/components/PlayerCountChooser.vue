@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="chooserWrapper">
     <button
       v-for="p in players"
       :key="p"
@@ -29,5 +29,8 @@ export default {
 </script>
 
 <style>
-
+#chooserWrapper {
+  display: flex;
+  flex-direction: row;
+}
 </style>

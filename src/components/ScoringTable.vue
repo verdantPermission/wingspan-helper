@@ -2,7 +2,7 @@
   <div class="table">
 
     <div class="row row--player">
-      <div class="cell cell--label">
+      <div class="cell cell--label cell--player">
         <span>{{ $t('playerTitle') }}</span>
         <span class="cell reset">
           <button @click="resetTitles($event)">{{ $t('reset') }}</button>
@@ -146,7 +146,7 @@ $color--border: rgba(0, 0, 0, 0.2);
   text-align: center;
 
   @include break-phone {
-    grid-template-columns: minmax(11rem, 1fr) repeat(60, 1fr);
+    grid-template-columns: minmax(10rem, 1fr) repeat(60, 1fr);
   }
 
   + .row {
@@ -183,16 +183,12 @@ $color--border: rgba(0, 0, 0, 0.2);
 }
 
 .reset {
-  font-size: smaller;
+  font-size: .9rem;
 }
 
 .cell {
   margin: 0;
-  padding: 0.25rem;
-
-  @include break-phone {
-    padding: 0.5rem
-  }
+  padding: 0.25rem 0.1rem;
 
   + .cell {
     border-left: 1px solid $color--border;
@@ -208,6 +204,13 @@ $color--border: rgba(0, 0, 0, 0.2);
   @include break-phone {
     font-size: 1.5rem;
   }
+}
+
+.cell--player {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: space-between;
 }
 
 .cell--player-num {

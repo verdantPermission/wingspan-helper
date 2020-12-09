@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <!-- <Slider v-model.number="playerCount"/> -->
     <ScoringTable />
     <div class="action-bar">
       <PlayerCountChooser class="action player-count"/>
@@ -33,25 +32,17 @@ export default {
 </script>
 <style lang="scss">
   .action-bar {
-    margin-top: 1rem;
+    margin-top: 0.5rem;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    @include break-phone {
-      justify-content: flex-end;
-      flex-direction: row;
-    }
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: baseline;
   }
 
   .action + .action {
     margin-left: 0.5rem;
     margin-top: 0.5rem;
-
-    @include break-phone {
-      margin-left: 1rem;
-      margin-top: 0;
-    }
   }
 
   .action.player-count {
@@ -62,10 +53,6 @@ export default {
       background-color: $color-fg--light;
       color: $color-text;
       padding: 0.25rem 0.5rem;
-
-      @include break-phone {
-        padding: 0.25rem 1rem;
-      }
 
       &:hover, &:focus {
         box-shadow: inset 0 0 0 2px $color-primary;
