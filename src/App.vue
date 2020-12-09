@@ -29,16 +29,17 @@
   margin: 0 auto;
   padding: $app-padding;
   text-align: center;
-
-  @include break-phone {
-    margin: auto;
-  }
 }
 
 #logoTitleWrapper {
   display: flex;
   flex-direction: row;
   justify-content: center;
+
+  @include break-phone {
+    height: 7rem;
+    margin: 0 0 2.5rem 0;
+  }
 }
 
 #logo {
@@ -53,17 +54,23 @@
 
 #titleWrapper {
   position: relative;
-  top: 4rem;
-  left: -2.5rem;
+  top: 2.5rem;
+  left: -2rem;
   font-family: $font-primary;
   font-weight: 550;
   line-height: .8;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: $color-text;
+
+  @include break-phone {
+    top: 3.5rem;
+    margin: 0.5rem 0;
+  }
 }
 
 #title {
+  white-space: nowrap;
   font-size: 3rem;
 }
 
