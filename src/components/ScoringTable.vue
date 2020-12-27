@@ -4,16 +4,23 @@
     <div class="row row--player">
       <div class="cell cell--label cell--player">
         <span>{{ $t('playerTitle') }}</span>
-        <span class="cell reset">
-          <button @click="resetTitles($event)">{{ $t('reset') }}</button>
-        </span>
+        <button
+          class="reset-names-btn"
+          v-show="touchedPlayerTitles"
+          :title="$t('resetPlayerTitleA11y')"
+          @click="resetPlayerTitles()"
+        >X</button>
       </div>
-      <div v-for="(player, playerNum) in activePlayers" :key="playerNum" :class="'cell-' + activePlayerCount() +'up cell cell--label cell--player-num'">
+      <div
+        v-for="(player, playerNum) in activePlayers"
+        :key="playerNum"
+        :class="'cell-' + activePlayerCount() + 'up cell cell--label cell--player-num cell--no-pad'">
         <input
           class="cell-input"
           type="string"
           :value="player.title"
-          @input="updateTitle($event, playerNum)"
+          @click="$event.target.select()"
+          @input="updatePlayerTitle($event, playerNum)"
         />
       </div>
     </div>
@@ -21,7 +28,7 @@
     <div class="row" v-for="(scoreType, i) in scoreTypes" :key="i">
       <p class="cell cell--label">{{localizedScoreTypes[i]}}</p>
       <div
-        :class="'cell-' + activePlayerCount() +'up cell cell--score'"
+        :class="'cell-' + activePlayerCount() +'up cell cell--no-pad'"
         v-for="(player, playerNum) in activePlayers"
         :key="playerNum"
       >
@@ -47,7 +54,12 @@
         :key="playerNum"
         :class="'cell-' + activePlayerCount() +'up cell cell--total'"
         >
-          <span class="result" v-show="showResults" :title="totalLabel(playerNum)">
+          <span
+            class="result"
+            :class="{ winner: winnerIDs.includes(playerNum) }"
+            v-show="showResults"
+            :title="totalLabel(playerNum)"
+          >
             {{player.total}}
           </span>
         </div>
@@ -70,8 +82,14 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['activePlayers', 'winner']),
-    ...mapState(['playerCount', 'scoreTypes', 'localizedScoreTypes']),
+    ...mapGetters(['activePlayers', 'winnerIDs']),
+    ...mapState([
+      'playerCount',
+      'scoreTypes',
+      'localizedScoreTypes',
+      'showTotal',
+      'touchedPlayerTitles'
+    ]),
     totalText () {
       return this.$t('total')
     }
@@ -115,7 +133,7 @@ export default {
       return Object.keys(this.activePlayers).length
     },
 
-    updateTitle (event, playerNum) {
+    updatePlayerTitle (event, playerNum) {
       const title = event.target.value
       this.$store.commit('setPlayerTitle', {
         playerNum,
@@ -123,10 +141,9 @@ export default {
       })
     },
 
-    resetTitles () {
+    resetPlayerTitles () {
       this.$store.commit('resetPlayerTitles', {})
     }
-
   }
 }
 </script>
@@ -182,8 +199,12 @@ $color--border: rgba(0, 0, 0, 0.2);
   }
 }
 
-.reset {
-  font-size: .9rem;
+.reset-names-btn {
+  background: rgba(0, 0, 0, 0) none repeat scroll 0% 0%;
+  border: 2px solid $color-primary;
+  color: $color-primary;
+  padding: 0 0.75rem;
+  margin-left: auto;
 }
 
 .cell {
@@ -196,6 +217,7 @@ $color--border: rgba(0, 0, 0, 0.2);
 }
 
 .cell--label {
+  display: flex;
   font-family: $font-primary;
   letter-spacing: 0.02rem;
   font-size: 1.2rem;
@@ -224,12 +246,8 @@ $color--border: rgba(0, 0, 0, 0.2);
   justify-content: center;
 }
 
-.cell--score {
+.cell--no-pad {
   padding: 0;
-}
-
-.cell--score .cell-input {
-  background-color: $color-fg--light;
 }
 
 .cell--player-num .cell-input {
@@ -237,6 +255,7 @@ $color--border: rgba(0, 0, 0, 0.2);
 }
 
 .cell-input {
+  background-color: $color-fg--light;
   width: 100%;
   height:  100%;
   border: 0;
@@ -255,6 +274,10 @@ $color--border: rgba(0, 0, 0, 0.2);
 
 /deep/ .toggle-button {
   font-weight: bold;
+}
+
+.result.winner {
+  border-bottom: 3px solid currentColor;
 }
 
 </style>

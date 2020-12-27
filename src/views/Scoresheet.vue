@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="scoresheet">
     <ScoringTable />
     <div class="action-bar">
       <PlayerCountChooser class="action player-count"/>
@@ -16,7 +16,7 @@ import PlayerCountChooser from '@/components/PlayerCountChooser.vue'
 import LanguageToggle from '@/components/LanguageToggle.vue'
 
 export default {
-  name: 'home',
+  name: 'Scoresheet',
   components: {
     ScoringTable,
     PlayerCountChooser,
@@ -32,17 +32,25 @@ export default {
 </script>
 <style lang="scss">
   .action-bar {
-    margin-top: 0.5rem;
+    margin-top: 1rem;
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: baseline;
+    flex-direction: column;
+    align-items: center;
+
+    @include break-phone {
+      justify-content: flex-end;
+      flex-direction: row;
+    }
   }
 
   .action + .action {
     margin-left: 0.5rem;
     margin-top: 0.5rem;
+
+    @include break-phone {
+      margin-left: 1rem;
+      margin-top: 0;
+    }
   }
 
   .action.player-count {
@@ -53,6 +61,10 @@ export default {
       background-color: $color-fg--light;
       color: $color-text;
       padding: 0.25rem 0.5rem;
+
+      @include break-phone {
+        padding: 0.25rem 1rem;
+      }
 
       &:hover, &:focus {
         box-shadow: inset 0 0 0 2px $color-primary;

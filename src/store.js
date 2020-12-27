@@ -25,10 +25,10 @@ const localStoragePlugin = store => {
 }
 
 const localStorageAvailable = () => {
-  var storage
+  let storage
   try {
     storage = window.localStorage
-    var x = '__storage_test__'
+    const x = '__storage_test__'
     storage.setItem(x, x)
     storage.removeItem(x)
     return true
@@ -66,11 +66,12 @@ const loadState = () => {
 }
 
 const defaultState = {
-  version: 1, // bump this every time the state schema changes
-  language: null, // first set by router
+  version: 2, // bump this every time the state schema changes
+  language: 'en',
   playerCount: 5,
   scoreTypes,
   localizedScoreTypes: i18n.t('scoreTypes'),
+  touchedPlayerTitles: false,
   players: {
     1: { scores: Object.assign({}, defaultScores), total: 0, title: '1' },
     2: { scores: Object.assign({}, defaultScores), total: 0, title: '2' },
@@ -87,8 +88,16 @@ export default new Vuex.Store({
     activePlayers: state => {
       return Object.fromEntries(Object.entries(state.players).slice(0, state.playerCount))
     },
-    winners: (state, getters) => {
-      // TODO
+    winnerIDs: (state, getters) => {
+      return Object.entries(getters.activePlayers) // object to array: [[playerId, playerObject],...]
+        .sort((a, b) => b[1].total - a[1].total) // highest scores first
+        .filter((current, i, array) => {
+          // remove 0-scores
+          if (current[1].total === 0) return false
+          // keep (possibly multiple) winners, discard others
+          return current[1].total >= array[0][1].total
+        })
+        .map(v => v[0]) // get winner IDs (as strings!)
     }
   },
   mutations: {
@@ -127,11 +136,13 @@ export default new Vuex.Store({
     },
     setPlayerTitle (state, payload) {
       state.players[payload.playerNum].title = payload.title
+      state.touchedPlayerTitles = true
     },
     resetPlayerTitles (state, payload) {
       for (let i = 1; i <= 5; i++) {
         state.players[i].title = i
       }
+      state.touchedPlayerTitles = false
     }
   },
   actions: {

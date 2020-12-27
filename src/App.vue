@@ -9,7 +9,7 @@
     </div>
     <div id="app">
       <main id="main">
-        <router-view />
+        <Scoresheet />
       </main>
       <footer id="footer">
         Contribute on
@@ -20,6 +20,14 @@
     </div>
   </div>
 </template>
+
+<script>
+import Scoresheet from './views/Scoresheet'
+export default {
+  name: 'App',
+  components: { Scoresheet }
+}
+</script>
 
 <style lang="scss">
 @import "styles/main.scss";
